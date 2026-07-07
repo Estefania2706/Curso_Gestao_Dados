@@ -1,0 +1,8 @@
+let
+    Origem = Excel.Workbook(File.Contents("C:\Users\estef\OneDrive\Ambiente de Trabalho\Inês\Formação Análise de dados\10796 - Gestão de Informação\Auditoria_Organização.xlsx"), null, true),
+    Folha1_Sheet = Origem{[Item="Folha1",Kind="Sheet"]}[Data],
+    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Folha1_Sheet, [PromoteAllScalars=true]),
+    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"Nome do Cliente", type text}, {"Data de Criação", type date}, {"Preço", Int64.Type}, {"Quantidade", Int64.Type}}),
+    #"Texto Cortado" = Table.TransformColumns(#"Tipo Alterado",{{"Nome do Cliente", Text.Trim, type text}})
+in
+    #"Texto Cortado"
